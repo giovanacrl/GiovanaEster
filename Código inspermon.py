@@ -8,7 +8,7 @@ def insperdex_bonito (insperdex):
                   .format(i,insperdex[i]["nome"],insperdex[i]["poder"],insperdex[i]["vida"], insperdex[i]["defesa"]))
 #função batalha 
 def batalha (vida_jogador, poder_jogador, defesa_jogador,
-             vida_oponente, poder_oponente, defesa_oponente):
+             vida_oponente, poder_oponente, defesa_oponente,experiencia):
     
     while vida_jogador >0 and vida_oponente>0:
         fugir=int(input("Batalha em andamento...você deseja:\n 1-continuar\n2-fugir"))
@@ -17,9 +17,8 @@ def batalha (vida_jogador, poder_jogador, defesa_jogador,
                 print("Você não conseguiu fugir...")
             elif poder_jogador <= poder_oponente:
                 print("empate")
-                return
-            
-        #funcionalidade da sorte 
+                return 
+        #função sorte         
         esferas=input("Escolha uma das esferas:\n Ouro\n Prata\n Bronze")
         esferas=esferas.lower()
             
@@ -29,19 +28,25 @@ def batalha (vida_jogador, poder_jogador, defesa_jogador,
             print("Nem escolher moeda voce sabe, toma azar!")
             sorte = -10
         print("Seu valor da sorte é {0}." .format(sorte))
-
-        
-        vida_oponente= vida_oponente - ( poder_jogador  - (defesa_oponente))
+            
+                
+        vida_oponente= vida_oponente - ( poder_jogador  - (defesa_oponente-sorte))
         if vida_oponente <0:
             vida_oponente = 0
+        elif (experiencia % 2) == 0 :
+            vida_oponente= vida_oponente - ( poder_jogador + experiencia  - (defesa_oponente-sorte))
         print("A vida do seu oponente é: {0}".format(vida_oponente))
         print("A sua vida é: {0}".format(vida_jogador))
-
-        vida_oponente= vida_oponente - ( poder_jogador  - (defesa_oponente-sorte))
         if vida_oponente>0:
+            if (experiencia % 2) == 0 : 
+                vida_jogador= (vida_jogador - (poder_oponente - (defesa_jogador + experiencia)))+ sorte + experiencia
+                print("SEU INSPERMON EVOLUIU,PARABÉNS!!! VOCÊ ACABA DE GANHAR {0} PONTOS DE EXPERIÊNCIA!".format(experiencia))
+            else:
                 vida_jogador= (vida_jogador - (poder_oponente - defesa_jogador))+ sorte
                 
         
+        
+        experiencia= experiencia + 1 
         if vida_oponente <= 0:
             return "ganhou"
         elif vida_jogador<=0:
@@ -95,12 +100,12 @@ while True:
 
         #Chamando a função batalha
         resultado = batalha (vida_jogador, poder_jogador, defesa_jogador,
-             vida_oponente, poder_oponente, defesa_oponente)
+             vida_oponente, poder_oponente, defesa_oponente,experiencia)
             
-
+        #estamos considerando como experiencia o fato de que o inspermon ganhou a batalha e assim é acrescentado 1 ao poder.
         if resultado == "ganhou":
             print("Você ganhou!")
-            
+            inspermons[escolha]["poder"]+= 1
             
         elif resultado == "perdeu":
             print("Você perdeu!")
