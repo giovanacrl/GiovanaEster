@@ -18,16 +18,28 @@ def batalha (vida_jogador, poder_jogador, defesa_jogador,
             elif poder_jogador <= poder_oponente:
                 print("empate")
                 return
-                           
+            
+        #funcionalidade da sorte 
+        esferas=input("Escolha uma das esferas:\n Ouro\n Prata\n Bronze")
+        esferas=esferas.lower()
+            
+        if esferas in ["ouro", "prata", "bronze"]:
+            sorte = 5*randint(0,20)
+        else:
+            print("Nem escolher moeda voce sabe, toma azar!")
+            sorte = -10
+        print("Seu valor da sorte é {0}." .format(sorte))
+
+        
         vida_oponente= vida_oponente - ( poder_jogador  - (defesa_oponente))
         if vida_oponente <0:
             vida_oponente = 0
         print("A vida do seu oponente é: {0}".format(vida_oponente))
         print("A sua vida é: {0}".format(vida_jogador))
 
-        
+        vida_oponente= vida_oponente - ( poder_jogador  - (defesa_oponente-sorte))
         if vida_oponente>0:
-                vida_jogador= (vida_jogador - (poder_oponente - defesa_jogador))
+                vida_jogador= (vida_jogador - (poder_oponente - defesa_jogador))+ sorte
                 
         
         if vida_oponente <= 0:
@@ -92,3 +104,4 @@ while True:
             
         elif resultado == "perdeu":
             print("Você perdeu!")
+
