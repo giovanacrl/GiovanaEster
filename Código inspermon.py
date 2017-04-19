@@ -51,11 +51,22 @@ def batalha (vida_jogador, poder_jogador, defesa_jogador,
             return "ganhou"
         elif vida_jogador<=0:
             return "perdeu"
-        
+
+
+
 # Le a lista de tipos de Inspermon.
 with open('inspermons.json') as arquivo:
      inspermons = json.load(arquivo)
      
+# Le o arquivo Insperdex de outras batalhas (salvando o jogo)
+try:
+    with open ('insperdex.json') as arquivo:
+        insperdex= json.load(arquivo)
+except Exception as inst:
+    print("Você ainda não batalhou para ter adversários!")
+    insperdex = []
+    
+experiencia=1
 while True:
     #Todas as opções para o jogador escolher
     opcoes = int(input("Escolha uma das opções:\n 1-Dormir\n 2-Passear\n 3-Exibir Inspèrdex"))
@@ -109,4 +120,10 @@ while True:
             
         elif resultado == "perdeu":
             print("Você perdeu!")
-
+    
+    # Cria um arquivo para salvar as informações.
+    with open('inspermons.json','w') as arquivo:
+        json.dump(inspermons, arquivo)
+    with open('insperdex.json','w') as arquivo:
+        json.dump(insperdex, arquivo)
+    
