@@ -87,7 +87,7 @@ while True:
         escolha = int(input("Qual a sua escolha?"))
         
         #Gerando um adversário aleatório
-        i = randint(0,15)
+        i = randint(0,28)
         
         #Adicionando o adverário na lista insperdex
         if inspermons[i] not in insperdex:
